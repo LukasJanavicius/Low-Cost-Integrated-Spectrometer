@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "Low-Cost-Integrated-Spectrometer",
+			"path": "."
+		},
+		{
+			"name": "spectrometer-dev",
+			"path": "spectrometer-dev"
+		}
+	],
+	"settings": {}
+}
