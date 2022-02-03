@@ -1,31 +1,12 @@
----
-author:
-- |
-  Group: 18 --\
-  **Lukas Janavicius**: Physical Design, R&V, Block Diagram\
-  **Drew Ingram**: High-level, Visual Aid, Schedule\
-  **Stephen Gioja**: Cost, Safety and Ethics\
-  NetIds: janavic2, andrewi2, and sgioja2\
-  TA: Charles Ross
-bibliography: "/bibliography/references.bib"
-date:  Spring 2020
-title: Low-Cost Integrated Spectrometer
----
-
-::: titlepage
-::: center
-**\
-\
-Design Document Check**
-
-------------------------------------------------------------------------
-
-*\
-* ECE 445 -- Spring 2020
-:::
-:::
 
 # Introduction
+The primary implemented functionality is located underneat the PCGen tool. Using geometric tools, it generates GDSII compatible geometry.
+
+
+
+
+
+
 
 ## Objective
 
