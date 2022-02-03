@@ -8,7 +8,8 @@ author:
   NetIds: janavic2, andrewi2, and sgioja2\
   TA: Charles Ross
 bibliography: "C:\\\\Users\\\\lukej\\\\Desktop\\\\Spectrometer DDC - janavic2,
-  sgioja2, andrewi2\\\\bibliography\\\\references.bib"
+  sgioja2,
+  andrewi2\\\\Low-Cost-Integrated-Spectrometer\\\\bibliography\\\\references.bib"
 date:  Spring 2020
 title: Low-Cost Integrated Spectrometer
 ---
@@ -80,7 +81,7 @@ microcontroller's 115.2 Kbaud USB-UART connection [@CCDAllmon].
 radius $r_{Grating} = 2 r_{RC}$, which is tangent to the Rowland Circle.
 The Rowland pole is the tangent point between these two circles, angles
 are defined from the line normal to the
-pole](images/grating_diagram_dd.pdf_tex){#fig:spec_intro}
+pole](images/grating_diagram_dd.png){#fig:spec_intro}
 
 # Design
 
@@ -112,12 +113,11 @@ the Arduino's USB-UART connection through WiFi. Additionally, with its
 two 240 MHz cores, the tasks of data acquisition and serving data to the
 user are split amongst the cores.
 
-![Spectrometer
-housing.](images/proposal_physical.pdf_tex){#fig:physical}
+![Spectrometer housing.](images/proposal_physical.png){#fig:physical}
 
 ![Photonics Schematic $\alpha = -15^{\circ}$, $\beta = -45^{\circ}$, and
 other dimensions scale to accommodate
-$r_{RC}$.](images/photonics layout.pdf_tex"){#fig:slablayout}
+$r_{RC}$.](images/photonics layout.png){#fig:slablayout}
 
 ![High-Level Block
 Diagram](images/Spectrometer Block Diagram.pdf){#fig:block_diagram
