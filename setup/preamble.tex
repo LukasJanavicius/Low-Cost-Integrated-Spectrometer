@@ -1,0 +1,72 @@
+\usepackage{amssymb}
+%% Language and font encodings
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{times}
+
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage[rgb]{xcolor} % Needed by pdfcomment
+
+\usepackage{import}
+%% Sets page size and margins
+\usepackage[top=1in,bottom=1in,left=1in,right=1in]{geometry}
+\usepackage[labelsep=period]{caption}
+%\renewcommand{\thetable}{\Roman{table}}
+%% Useful packages
+\usepackage{karnaugh-map}
+\usepackage{tikz}
+%\usepackage{amsmath}
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\floatstyle{plaintop}
+\restylefloat{table}
+\linespread{1.6}
+\usepackage{epstopdf}
+\epstopdfDeclareGraphicsRule{.tif}{png}{.png}{convert #1 \OutputFile}
+\AppendGraphicsExtensions{.tif}
+\setlength{\voffset}{0cm}
+\setlength{\headsep}{0cm}
+%\usepackage{amsmath} % or simply amstext
+\newcommand{\angstrom}{\textup{\AA}}
+\usepackage{siunitx}
+\usepackage{array}% in the preamble
+\usetikzlibrary{arrows,automata,positioning}
+\newcolumntype{L}{>{\arraybackslash}m{7.25cm}}
+\newcolumntype{C}{>{\centering\arraybackslash}m{3cm}}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{xcolor}
+ 
+\lstdefinestyle{customc}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  frame=L,
+  xleftmargin=\parindent,
+  language=C,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{green!40!black},
+  commentstyle=\itshape\color{purple!40!black},
+  identifierstyle=\color{blue},
+  stringstyle=\color{orange},
+}
+
+\lstdefinestyle{customasm}{
+  belowcaptionskip=1\baselineskip,
+  frame=L,
+  xleftmargin=\parindent,
+  language=[x86masm]Assembler,
+  basicstyle=\footnotesize\ttfamily,
+  commentstyle=\itshape\color{purple!40!black},
+}
+
+\lstset{escapechar=@,style=customc}
+
+\graphicspath{{images/}}
+\usepackage{amsmath,amssymb}
+
+\input{setup/projectinfo}
+\input{setup/Requirements}

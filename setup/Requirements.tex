@@ -1,0 +1,40 @@
+
+\newcommand{\Verify}[1]{
+\item  #1 
+}
+
+\newcommand{\Verification}[1]{
+\item
+\begin{enumerate}\itemsep0em  #1\end{enumerate}
+}
+
+\newcommand{\Require}[1]{
+\item  #1 
+}
+
+\newcommand{\Requirement}[2]{
+\begin{table}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|L|L|}
+\hline
+\textbf{Requirement} & \textbf{Verification} \\ \hline
+ #1  & \begin{enumerate}[label=(\alph*)] \itemsep0em  #2 \end{enumerate}       \\ \hline
+\end{tabular}%
+}
+\end{table}
+}
+
+\newcommand{\Requirements}[2]{
+\begin{table}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|L|L|}
+\hline
+\textbf{Requirements} & \textbf{Verification} \\ \hline
+\begin{enumerate} #1  \end{enumerate}    & \begin{enumerate} \itemsep0em  #2\end{enumerate} \\ \hline
+\end{tabular}%
+}
+\end{table}
+}
+
