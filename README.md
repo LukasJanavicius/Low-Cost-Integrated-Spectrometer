@@ -7,9 +7,7 @@ author:
   **Stephen Gioja**: Cost, Safety and Ethics\
   NetIds: janavic2, andrewi2, and sgioja2\
   TA: Charles Ross
-bibliography: "C:\\\\Users\\\\lukej\\\\Desktop\\\\Spectrometer DDC - janavic2,
-  sgioja2,
-  andrewi2\\\\Low-Cost-Integrated-Spectrometer\\\\bibliography\\\\references.bib"
+bibliography: "\\\\bibliography\\\\references.bib"
 date:  Spring 2020
 title: Low-Cost Integrated Spectrometer
 ---
