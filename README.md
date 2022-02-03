@@ -81,7 +81,7 @@ microcontroller's 115.2 Kbaud USB-UART connection [@CCDAllmon].
 radius $r_{Grating} = 2 r_{RC}$, which is tangent to the Rowland Circle.
 The Rowland pole is the tangent point between these two circles, angles
 are defined from the line normal to the
-pole](images/grating_diagram_dd.png){#fig:spec_intro}
+pole](/images/grating_diagram_dd.png){#fig:spec_intro}
 
 # Design
 
@@ -113,14 +113,14 @@ the Arduino's USB-UART connection through WiFi. Additionally, with its
 two 240 MHz cores, the tasks of data acquisition and serving data to the
 user are split amongst the cores.
 
-![Spectrometer housing.](images/proposal_physical.png){#fig:physical}
+![Spectrometer housing.](/images/proposal_physical.png){#fig:physical}
 
 ![Photonics Schematic $\alpha = -15^{\circ}$, $\beta = -45^{\circ}$, and
 other dimensions scale to accommodate
-$r_{RC}$.](images/photonics layout.png){#fig:slablayout}
+$r_{RC}$.](/images/photonics layout.png){#fig:slablayout}
 
 ![High-Level Block
-Diagram](images/Spectrometer Block Diagram.pdf){#fig:block_diagram
+Diagram](/images/Spectrometer Block Diagram.pdf){#fig:block_diagram
 width="80%"}
 
 ## Photonics
@@ -133,7 +133,7 @@ diffraction condition for a Rowland defined grating. Subfigure B shows
 the second, Bragg, diffraction condition of the elliptical grating.
 Subfigure C shows the device layout, the combined diffraction condition
 ensures only one output order
-[@Pottier2014IntegratedInsulator; @Wang2019IntegratedAstronomy]](images/gratingconditions.png){#fig:spec_dia
+[@Pottier2014IntegratedInsulator; @Wang2019IntegratedAstronomy]](/images/gratingconditions.png){#fig:spec_dia
 width="80%"}
 
 Different wavelengths of light will need to be physically separated. We
@@ -190,7 +190,7 @@ $$\label{eq:fsr}
             \Delta \lambda = \frac{\lambda_{blazing}}{M}(1- \frac{M+1}{M}(1-\frac{\eta_{eff}}{\eta_{2}}))$$
 
 ![Diffraction Grating Design
-Flow-Chart](images/grating_types.png){#fig:gratingflowchart width="80%"}
+Flow-Chart](/images/grating_types.png){#fig:gratingflowchart width="80%"}
 
 ### Slab Waveguide
 
@@ -212,7 +212,7 @@ TCD1103GF from Toshiba for its standard interface, low-cost, and 3.3V
 compatibility. *\
 Requirement: Must drive the MCLK at 2-4 MHz.*
 
-![CCD Driver Schematic](images/ccdschem.PNG){#fig:ccdsc width="80%"}
+![CCD Driver Schematic](/images/ccdschem.PNG){#fig:ccdsc width="80%"}
 
 ### ADC
 
@@ -221,7 +221,7 @@ ESP32. To match the CCD's speed the ADC must be compatible with the
 ESP's fastest serial communication standard SPI, and offer atleast 2
 MSPS.
 
-![ADC Device Schematic](images/adcschem.PNG){#fig:adcsc width="80%"}
+![ADC Device Schematic](/images/adcschem.PNG){#fig:adcsc width="80%"}
 
 ### Microcontroller Core 0
 
@@ -335,13 +335,6 @@ unit.
   Total                                                       \$42.98
 :::
 
-We plan to build 5 prototypes with a total production cost of
-\$92,614.90.
-
-## Schedule
-
-![Project Schedule.](images/senior_design_schedule.pdf){#fig:schedule
-width="\\textwidth"}
 
 # Safety and Ethics
 
