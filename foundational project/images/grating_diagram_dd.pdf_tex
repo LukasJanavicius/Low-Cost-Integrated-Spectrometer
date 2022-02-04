@@ -38,7 +38,7 @@
   \newcommand*\fsize{\dimexpr\f@size pt\relax}%
   \newcommand*\lineheight[1]{\fontsize{\fsize}{#1\fsize}\selectfont}%
   \ifx\svgwidth\undefined%
-    \setlength{\unitlength}{360.59354684bp}%
+    \setlength{\unitlength}{394.45868992bp}%
     \ifx\svgscale\undefined%
       \relax%
     \else%
@@ -50,21 +50,21 @@
   \global\let\svgwidth\undefined%
   \global\let\svgscale\undefined%
   \makeatother%
-  \begin{picture}(1,0.85358884)%
+  \begin{picture}(1,0.78030637)%
     \lineheight{1}%
     \setlength\tabcolsep{0pt}%
     \put(0,0){\includegraphics[width=\unitlength,page=1]{grating_diagram_dd.pdf}}%
-    \put(0.57249622,0.50062756){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\large{$\beta$}\end{tabular}}}}%
-    \put(0.58917103,0.43866204){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\large{$\alpha$}\end{tabular}}}}%
+    \put(0.53008324,0.47589372){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\large{$\beta$}\end{tabular}}}}%
+    \put(0.53860426,0.40100194){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}\large{$\alpha$}\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=2]{grating_diagram_dd.pdf}}%
-    \put(0.48625416,0.34676681){\color[rgb]{0,0,1}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}r$_{RC}$\end{tabular}}}}%
+    \put(0.44452303,0.31699612){\color[rgb]{0,0,1}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}r$_{RC}$\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=3]{grating_diagram_dd.pdf}}%
-    \put(0.46360379,0.12989958){\color[rgb]{0,0.50196078,0.50196078}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}r$_{Grating}$\end{tabular}}}}%
+    \put(0.42381724,0.11874742){\color[rgb]{0,0.50196078,0.50196078}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}r$_{Grating}$\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=4]{grating_diagram_dd.pdf}}%
-    \put(-0.0032661,0.66098074){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Fiber V-Groove\end{tabular}}}}%
+    \put(-0.00297084,0.60423409){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Fiber V-Groove\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=5]{grating_diagram_dd.pdf}}%
-    \put(0.39995968,0.79609067){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}CCD\end{tabular}}}}%
+    \put(0.36563712,0.72774454){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}CCD\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=6]{grating_diagram_dd.pdf}}%
-    \put(0.82073261,0.16623667){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Concave\\Grating\end{tabular}}}}%
+    \put(0.75028577,0.15196489){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Concave Grating\end{tabular}}}}%
   \end{picture}%
 \endgroup%

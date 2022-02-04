@@ -1,283 +1,261 @@
 \documentclass{article}
 \input{setup/preamble}
-
+\usepackage{lmodern,amsmath,amssymb}
 % Cite documents by typing  \cite{ }
 % Once that's up, you should see a list of really long names
 % try searching by title, subject, or author
 
 % Change this to whatever the assignment name is
-\renewcommand{\assignmentname}{Design Document Check}
+\lstset{language=Python}
+\lstset{frame=lines}
+\lstset{caption={Insert code directly in your document}}
+\lstset{label={lst:code_direct}}
+\lstset{basicstyle=\footnotesize}
 
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{physics}
+
+\newcommand{\bitem}[1]{\item \textbf{#1}}
+\title{Final Report -- Planar Concave Grating Design}
 
 \begin{document}
 \maketitle
 
-
+\thispagestyle{empty}
 \tableofcontents
+\newpage
+\setcounter{page}{1}
 
-\section{Introduction}
+\section{Abstract}
+In this work I present a novel method for programmaticly generating planar concave gratings based on concentric ellipsis. Although I was unsuccessful in simulating the device with FDTD, the implemented algorithm dynamically generates and visualizes any valid grating configuration. Additionally, I propose a pure python algorithm for closed-loop generation of these gratings for a wide breadth of applications. This algorithm is fully compatible with the required file format for the silicon photonics lab, so future students can use this work as a scaffold for their own exploration of planar gratings.
 
-    \subsection{Objective}
-    For three centuries, optical spectrometers have played instrumental roles in advancing nearly all branches of science, from discovering new elements, determining the composition of stars, or even identifying and characterization of Two-Dimensional materials \cite{Weeks1932TheDiscoveries, Loewen1997DiffractionApplications, WhatSpectroscopy}. Given the technology's maturity, modern-day spectrometers have evolved since their initial conception, collecting and quantifying their data for instant analysis. However, budget digital spectrometers, including their required software, start at over \$1000 \cite{OceanSpectrometers}. This cost barrier effectively limits spectrometry techniques to controlled laboratory environments in Universities and other research institutions. 
-    
-    We aim to bring the cost of the digital optical spectrometer, lowering the barrier of entry and extending the applications of spectrometry. A spectrometer's cost lies in its expensive optics and dedicated high-frequency data collection hardware. Our proposed solution is to eliminate costly optical components by integrating an optical circuit in acrylic plastic and collecting the diffracted light using a linear CCD image sensor driven by a low-cost microcontroller.
-     
-     
-    \subsection{Background}
-        Integrated Photonic Spectrometers (IPSs) are a well-studied subject, fabricated in various materials and geometries; however, such literature presents narrow and novel applications of the IPS like broadband single-photon spectrometers, while commercial devices start at over \$350 for the sensor alone \cite{Ma2013, Pottier2014IntegratedInsulator, Cheng2019BroadbandSpectrometer, BO-HAMA-2-C12880MADigiKey}. Additionally, several open-source projects demonstrate digital spectrometers built with the Arduino framework but are limited in that capturing a single data frame takes 4 seconds over the 8-bit microcontroller's 115.2 Kbaud USB-UART connection \cite{CCDAllmon}.
-   
+\begin{figure}[H]
+\centering
+\large 
+\def\svgwidth{0.8 \textwidth}
+\colorbox{white}{\includegraphics{images/grating_diagram_dd.png}}
+%\includegraphics{images/proposal_layout.pdf_tex}
+%\caption{\label{fig:spec_intro}Spectrometer grating layout.}
+\end{figure}
 
-    \subsection{High-Level Requirements}
-        \begin{itemize}
-            \item The spectrometer's optics should be capable of resolving the plasma emission spectra of common gasses, such as argon.
-            \item The spectrometer must be capable of live plotting and capturing data with a refresh rate of at least 10 hz.
-            \item We must present a novel fabrication technique for a PMMA-based spectrometer to enable manufacturing at a significantly lower cost than current alternatives.
-        \end{itemize}
-       \begin{figure}[H]
-       
-    \centering
-    \def\svgwidth{0.8 \columnwidth}
-    \includegraphics{images/grating_diagram_dd.png}
-    %\includegraphics{images/proposal_layout.png}
-    \caption{\label{fig:spec_intro}Spectrometer grating configuration. The grating lies on a circle of radius $r_{Grating} = 2 r_{RC}$, which is tangent to the Rowland Circle. The Rowland pole is the tangent point between these two circles, angles are defined from the line normal to the pole}
-    \end{figure}
-    
+\newpage
 
-\section{Design}
-    \subsection{Physical Design}
-    Figure \ref{fig:physical}, The physical design of the spectrometer isolates the light sensitive hardware from the environment. Additionally, the optical feedthrough allows our spectrometer to connect to external optical fibers and instruments. The photonics are located off-center to allow for the ESP chip and its accompanying electronics. Also shown is the photonic slab mounted to the CCD. Figure \ref{fig:slablayout} shows the photonics package relative to the CCD. Angular measurements follow the work of P. Pottier and M. Packirisamy, while other dimensions are maximized to accommodate the package \cite{Packirisamy2013DesignMirrors}.
-    
-      The spectrometer design in Figure \ref{fig:block_diagram} requires three primary modules to fulfill the above requirements. The photonics demodulate light inbound through a coupled optical fiber, as in Figure \ref{fig:spec_dia} and the outbound light is coupled into waveguides carrying a given spectral band. By using a three-dollar microcontroller, the ESP32, we satisfy the remaining requirements, as it overcomes the communication bottleneck of the Arduino's USB-UART connection through WiFi. Additionally, with its two 240 MHz cores, the tasks of data acquisition and serving data to the user are split amongst the cores.
-    
-    \begin{figure}[H]
-    \centering
-    \scriptsize  
-    \def\svgwidth{\columnwidth}
-    \includegraphics{images/proposal_physical.png}
-    %\includegraphics{images/proposal_layout.png}
-    \caption{\label{fig:physical}Spectrometer housing.}
-    \end{figure}
-    
-    \begin{figure}[H]
-    \centering
-    \large
-    \def\svgwidth{\columnwidth}
-    \includegraphics{"images/photonics layout.png"}
-    %\includegraphics{images/proposal_layout.png}
-    \caption{\label{fig:slablayout}Photonics Schematic $\alpha = -15^{\circ}$, $\beta = -45^{\circ}$, and other dimensions scale to accommodate $r_{RC}$.}
-    \end{figure}
+\section{Introduction and Background}
 
+\subsection{Basis for Design}
+The foundational work for this design comes from P. Pottier et al. \cite{Packirisamy2012Mono-OrderGrating}. The reference design, is displayed in Figure \ref{fig:pot_ref}, the left image is a traditional planar Rowland grating, whereas the right is a mono-order distributed Bragg reflector grating. The design presented in this report follows the latter, as it offers greater efficiency than the traditional grating, and its construction lends itself to programmatic generation. 
 
-  
-    
-    \begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\textwidth]{images/Spectrometer Block Diagram.pdf}
-    \caption{\label{fig:block_diagram}High-Level Block Diagram}
-    \end{figure}
-    
-    \subsection{Photonics}
-        \subsubsection{Concave Blazed Diffraction Grating}
-        \begin{figure}[H]
-        \centering
-        \includegraphics[width=0.8\textwidth]{images/gratingconditions.png}
-        \caption{\label{fig:spec_dia}Integrated Spectrometer geometrical constraints from P. Pottier et al. \cite{Pottier2014IntegratedInsulator}. Subfigure A shows the general diffraction condition for a Rowland defined grating. Subfigure B shows the second, Bragg, diffraction condition of the elliptical grating. Subfigure C shows the device layout, the combined diffraction condition ensures only one output order \cite{Pottier2014IntegratedInsulator, Wang2019IntegratedAstronomy}}
-        \end{figure}
-        
-        Different wavelengths of light will need to be physically separated. We plan to accomplish this by using an Concave Blazed grating, as in Figure \ref{fig:spec_dia}. Our design's constraints demand a larger feature size than that of detailed by P Potter et al, since MNTL's Heidelberg mla150 has a feature size of 600 nm.
-        
-        Equation \ref{eq:rowlandcond} describes the general diffraction condition for the Rowland mounted grating; $\lambda_{blazing} = 600$ nm is the center wavelength for our detection band, $M$ is the diffraction order, $\eta_{eff} = 1.5$, and $\sin{\alpha}$ and $\sin{\beta}$ are the input and output pole-angles respectively \cite{Packirisamy2012Mono-OrderGrating}. To meet the 600 nm feature size, $M \geq 2$, and in general a larger $M$ implies a larger device.
-        
-        \begin{equation}
-           \begin{aligned}\label{eq:rowlandcond}
-            a &(\sin{\alpha} + \sin{\beta})= M \frac{\lambda_{blazing}}{\eta_{eff}} \\
-            a &= M \frac{\lambda_{blazing}}{\eta_{eff} (\sin{\alpha} + \sin{\beta})}
-        \end{aligned}
-        \end{equation}
-     
-        Equation \ref{eq:blazing} represents the blazing conditions of a two-material Distributed Bragg Reflector (DBR) system \cite{Packirisamy2012Mono-OrderGrating}. The chosen system is PMMA/air, $\eta_{eff} = 1.5$ and $\eta_{2} = 1$, which is identical to the index of refraction differential of Pottier et al. Equation \ref{eq:braggcond} describes the condition for the DBR's maximum reflectively, although such constraints can be relaxed if $d_2 \ll d$ \cite{Packirisamy2013DesignMirrors, Packirisamy2012Mono-OrderGrating}. 
-        
-        \begin{equation}
-           \label{eq:blazing}
-            d = -a \sin{\frac{\alpha + \beta}{2}} = d_1+d_2 
-        \end{equation}
-        
-        \begin{equation}
-           \begin{aligned}\label{eq:braggcond}
-           \text{Given }\phi &= \frac{\alpha - \beta}{2} \text{, and } \eta_{eff} \sin{\phi} = \eta_{2} \sin{\phi_2}\\
-            d1 &=  \frac{(2 k_1 +1) \lambda}{4 \eta_{eff} \cos{\phi}} \text{, where $ {k_1} \in \mathbb{Z}$} \\
-            d2 &=  \frac{(2 k_2 +1) \lambda}{4 \eta_{2} \cos{\phi_2}} \text{, where $ {k_2} \in \mathbb{Z}$}
-         \end{aligned}
-        \end{equation}
-        
-        Equation \ref{eq:fsr} represents the Free Spectral Range (FSR), $\Delta \lambda$, or the maximum bandwidth of the detection region \cite{Mao2019PerfectPlatform}. For our system $\Delta \lambda \rvert_{M=2} = 525$ nm and $\Delta \lambda \rvert_{M=3} = 333$ nm, in general as the bandwidth goes down the resolving power of our grating goes up. With these parameters, we can tune the wavelength response band and resolution within that band.
-        
-        \begin{equation}\label{eq:fsr}
-            \Delta \lambda = \frac{\lambda_{blazing}}{M}(1- \frac{M+1}{M}(1-\frac{\eta_{eff}}{\eta_{2}}))
-        \end{equation}
-        
-        \begin{figure}[H]
-        \centering
-        \includegraphics[width=0.8\textwidth]{images/grating_types.png}
-        \caption{\label{fig:gratingflowchart}Diffraction Grating Design Flow-Chart}
-        \end{figure}       
-        
-        \subsubsection{Slab Waveguide}
-        An optical fiber must couple light into the acrylic. For this we propose a laser-engraved v-groove mounting, coupled via epoxy to an acrylic slab waveguide. The waveguide confines light within two dimensions and directs it to the CCD. Our fabrication should exceed a 10 micron etch depth to ensure multimodal transport.
-        
-        
-    \subsection{Data Acquisition}
-        \subsubsection{CCD}
-       Detects and measures the intensity of light on each pixel. The array of pixels allows us to resolve the output spectrum spatially. The CCD integrates the output spectrum with time, to prevent overexposure, it must be refreshed at a high rate, 1-2 MSPS. We propose using the TCD1103GF from Toshiba for its standard interface, low-cost, and 3.3V compatibility.
-        \textit{\\Requirement: Must drive the MCLK at 2-4 MHz. }
-        
-        \begin{figure}[H]
-        \centering
-        \includegraphics[width=0.8\textwidth]{images/ccdschem.PNG}
-        \caption{\label{fig:ccdsc}CCD Driver Schematic}
-        \end{figure}
-        
-        \subsubsection{ADC}
-        The The ADC converts the CCD's analog readings to digital data for the ESP32. To match the CCD's speed the ADC must be compatible with the ESP's fastest serial communication standard SPI, and offer atleast 2 MSPS.
-        
-        \begin{figure}[H]
-        \centering
-        \includegraphics[width=0.8\textwidth]{images/adcschem.PNG}
-        \caption{\label{fig:adcsc}ADC Device Schematic}
-        \end{figure}
-        
-        \subsubsection{Microcontroller Core 0}
-             At a high level, the ESP32 SOC is configured with two tasks. Initially, we configure the platform's 16 peripheral timers, capable of a maximum of 40 MHz, to generate the necessary clock signals signal. Then, the task of monitoring the board hardware communicates with the ADC over SPI. Incoming data is streamed to the second core, which hosts an asynchronous web server.
-             
-    
-    \subsection{Server}
-        The server will comprise an ESP32 hosting a network access point where the intended user can connect and log on to view their data in a web browser. The implementation of the server is beyond the scope of this class; however, the general requirements of each components are listed below.
-        \subsubsection{Microcontroller Core 1}
-            This Microcontroller asynchronously communicates to its WiFi IC and the other core. Additionally it hosts our web server with a complementary file-system.    
-            \textit{\\Requirement: Cannot bottleneck the 10 frames-per-second required above.}
+\begin{figure}[H]        
+\centering
+\scriptsize 
+\includegraphics[width=0.9 \textwidth]{images/pottier.png}
+\caption{\label{fig:pot_ref} Reference grating geometries, reproduced from from P. Pottier et al. \cite{Packirisamy2012Mono-OrderGrating}.}
+\end{figure}
 
-        \subsubsection{Asynchronous Web Server}
-            \textit{Requirement: Must serve the plotting script, and establish a websocket connection.}
-            
-        \subsubsection{Web Socket}
-            Connects to the user's plotting script to stream the spectrum's data. The async server host's the websocket, and connects the user to it.
-            \textit{\\Requirement: Must connect to the user's plotting script and stream the data atleast 30kbps.}
-            
-        \subsubsection{Captive DNS Portal}
-            \textit{Requirement: Must immediately forward anyone connecting to our network to a webpage with our plotting script.}
-            
-        \subsection{Soft Access Point}  
-            \textit{Requirement: Must allow users to connect by joining the WiFi network.}
-            
-        \subsubsection{Plotting Script}
-            \textit{Requirement: Defines a set of API functions which receive data from the microcontroller and forward them to a JavaScript plotting API \cite{ESP32/ESP8266Tutorials}}.
-    
-            
-    \subsection{Risk Analysis}
-    The most challenging component to design will likely be the photonic circuit. The diffraction grating's geometrical constraints have only been proven for a simple concave blazed grating, whose effieciency has been simulated at less than 39\% \cite{Packirisamy2013DesignMirrors, Packirisamy2012Mono-OrderGrating, Pottier2014IntegratedInsulator}. The same work demonstrates using Bragg reflectors to produce Mono-Order diffraction gratings at greater than 99\% efficiency. 
-    
-    The grating also challenges the fabrication process; we must maximize reflectively, while performing a high aspect ratio etch. We must tune our UV exposure and development time to reach our desired aspect ratio, and optimize our grating geometry. If the etch is not consistent throughout, our calculated path-length differences no longer hold and our grating will fail.
-    
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.65\textwidth]{images/bragg_cond.png}
+\caption{ Bragg condition for two material stack \cite{Packirisamy2012Mono-OrderGrating}.}
+\label{fig:nanos_test_code0}
+\end{figure}
 
+\subsection{Verification of Elliptical Design}
+The following equations describe the various geometrical and optical condition for optimal device performance \cite{Packirisamy2012Mono-OrderGrating,Pottier2014IntegratedInsulator}. As discussed in the work of P. Pottier et al. \cite{Packirisamy2012Mono-OrderGrating}, drawing ellipsis who's foci are the input and output points with thickness $d_2$ offset from one another by a distance $d$ (the center to center distance), satisfies the diffraction conditions and the blazing condition. However, as discussed below, the bragg reflector stack cannot be fabricated in an ideal manner. Despite this, if the ellipse thickness is much smaller than the spacing between the ellipsis, that is $\frac{d_2}{d} \approx 0$, the device's efficiency is maximized.
 
-\section{Requirements and Verification}
-\subsection{Diffraction Grating [40 Points]}
+\subsubsection{Equations}
 
-    \Requirement{ Must diffract light within the range of 400-800 nm
-            } { \Verify{Place grating inside nanolab's quantum efficiency (QE) measurement system, between the Monochromator and CCD.}
-                \Verify{Sweep input wavelengths across the specified range, record the output diffraction order's position on the CCD as a function of wavelength.}
-                \Verify{Ensure our grating geometry supports a single high-order diffraction order, and that the output range falls within the detector length.}
-                \Verify{Compare input and output optical power across full band to calculate efficiency}
-                }
+To improve the device's efficiency, the grating may be curved. The radius of the grating must be $2 R_{RC}$, so that it focuses the input light into the outputs placed around the Rowland Circle. It's worth noting that the radius does not particularly matter, for the purposes of this design
+\begin{equation}
+    \vb{M \lambda} = - n a (\sin{\alpha} + \sin{\beta})
+    \label{eq:a}
+\end{equation}
+                We also note, 
+\begin{equation*}
+    \sin{\theta} = \frac{d}{a}
+\end{equation*}
                 
-\subsection{Slab Waveguide [10 Points]}
+The second diffraction condition comes from finding the path length difference $\delta$,
+\begin{equation*}
+    m \lambda = 2 \Bigg[ n d_1 \cos{\phi} + n_2 d_2 \sqrt{1-(\frac{n}{n_2})^2 \sin^2 \phi} \Bigg]
+\end{equation*}
 
-\Requirement{ The slab's thickness must exceed 10 microns.
-        } { \Verify{Record the time spent developing the diffraction grating.}
-            \Verify{Depth measurements at this feature-size are possible with the nanolab's Keyence VWX microscope's 3D imaging.}
-            \Verify{If etch depth is too shallow, increase development time.}
-            }
+To select our pass-band center, the angle of the grating lines with respect to the grating normal, $\phi$, should obey Snell's law. That is,
 
-\subsection{Data Acquisition [20 Points]}
+\begin{equation*}
+    \left \lbrace
+    \begin{aligned}
+        &\alpha - \phi + \theta = 0\\
+        &\alpha - \beta = 2 \phi\\
+    \end{aligned}
+    \right.
+\end{equation*}
 
-\Requirement{  Must sample at a rate of 1-2 MSPS
-                    } { 
-                        \Verify{Establish SPI communication with the ADC}
-                        \Verify{Generate a 0.5-1 MHZ sine wave with a function generator.}
-                        \Verify{The data rate out of the CCD must be the same as the ADC, 1-2 MSPS, by the nyquist condition the ADC should reconstruct the signal.}
-                        \Verify{Run SPI communication between ADC and CCD and ensure 10 Hz polling rate.}
-                    }
-
-\subsection{Microcontroller [30 Points]}
-
- \Requirements{ \Require{ Must generate multiple 1-4 MHz clock signals for driving the CCD}
-                            \Require{ SPI communication must support atleast 10 full 1500-pixel frames each second (30kbps)}
-                        } { 
-                            \Verification{
-                                \Verify{Configure the ESP to PWM 0-40 MHz on all clock related GPIO.}
-                                \Verify{Confirm all clock pins can output atleast their respective maximum frequencies with an oscilloscope.}
-                            } 
-                             \Verification{
-                                \Verify{Establish SPI communication with the ADC}
-                                \Verify{Generate a 500 KHz sine wave with a function generator.}
-                                \Verify{As before, if the microcontroller reconstructs the signal, the data-rate exceeds 30 Kbps.}
-                                
-                            }
-                        }
-                        
-
-\section{Cost and Schedule}
-
-\subsection{Cost Analysis}
-
-We estimate the hourly rate at approximately \$42/hr using Engineering Illinois's calculated \$84,250 for the year 2014-2015. 
-The number of hours each of us spend per week will vary throughout the semester, but we estimate 10hrs/wk average for the three of us and be able to complete the prototype design within the 16 week semester, Equation \ref{eq:cost1}
-. Additionally, Equation \ref{eq:cost2}, we estimate our cleanroom costs using UIUC's MNTL hourly-rate for industry at \$75/hr. We assume two individuals will spend under 10 hours each weeks for 8 out of the 16 work weeks in the semester. 
-\begin{equation}\label{eq:cost1}
-    3 \times \frac{\$ 42}{\text{hr}}\times \frac{10 \text{hr}}{\text{wk}} \times  16 \text{wk}  \times  2.5 = \$50,400 
+Rearranging the above conditions yield the following critical relation, so if $a$ is found using equation \ref{eq:a}, the center-to-center distance $d$ is
+\begin{equation}
+d = -a \sin (\frac{\alpha + \beta}{2})
+    \label{eq:d}
 \end{equation}
 
-\begin{equation}\label{eq:cost2}
-     2 \times \frac{\$ 75}{\text{hr}}\times \frac{10\text{hr}}{\text{wk}} \times  8 \text{wk}  \times  2.5 = \$30,000
-\end{equation}
+The optimal Bragg reflector dimensions are
+\begin{equation*}
+    \left \lbrace
+    \begin{aligned}
+        &d_1 = \frac{(2 k_1 +1) \lambda}{4 n \cos{\phi}}\\
+        &d_2 = \frac{(2 k_2 +1) \lambda}{4 n_2 \cos{\phi_2}}\\
+        &k_1, k_2 \in \mathbb{Z}
+    \end{aligned}
+    \right.
+\end{equation*}
+It is very difficult to select dimensions such that the above conditions are met; however, if $\frac{d_2}{d} \approx 0$ or $d_1 = d_2$ and $n_2 \approx  n$ then the path length difference from both conditions is approximately equal \cite{Packirisamy2012Mono-OrderGrating, Pottier2014IntegratedInsulator}. Therefore $m=-M$, which optimizes device efficiency.
 
-Our parts and prototype creation costs are estimated to be \$2.98 per unit.
 
-\begin{center}
-\begin{tabular}{ |l|r| } 
- \hline
- Part & Cost \\ 
- \hline
- ESP32 dual core microcontroller breakout board (mouser) & \$10.00  \\ 
- TI Analog to Digital converter ADS7947SRTER (mouser) & \$3.59  \\ 
- Toshiba CCD Linear Image Sensor TCD1103GFG (mouser) & \$14.79  \\ 
- Assorted Resistors, Capacitors, ICs, Sockets & \$10.00  \\
- PCB (PCBWay) & \$4.60 \\
- \hline
- Total & \$42.98 \\
- \hline
-\end{tabular}
-\end{center}
+\section{Implementation}
+    The entirety of the design work takes place in the python programming language; specifically, using the geometric package Shapely. Shapely is a BSD-licensed Python package for manipulation and analysis of planar geometric objects \cite{ShapelyDocumentation}. The key advantage of using shapely to define photonic circuit elements is the native support for gdshelpers, another package which takes shapely polygons and curves and generates photonic devices \cite{WelcomeDocumentation}. From MZIs, waveguides, couplers, and resonators the gdshelper package offers many tools for creating GDSII files, which are standard for lithography tools. Furthermore, the open source FDTD package, Meep, offers a GDSII importer for simulations \cite{ManualDocumentation}. Although I did not generate mask files or simulate the structure, which is discussed further below, it is possible to implement the closed-loop algorithm in Figure \ref{fig:alg} entirely in one script.
 
-We plan to build 5 prototypes with a total production cost of \$92,614.90.
-
-\subsection{Schedule}
-    \begin{figure}[H]
+    
+    
+    \subsection{Algorithm}
+    
+    \begin{figure}[H]        
     \centering
-    \includegraphics[width=\textwidth]{images/senior_design_schedule.pdf}
-    \caption{\label{fig:schedule}Project Schedule.}
+    \scriptsize 
+    \includegraphics[width=0.5\textwidth]{images/grating_construction.png}
+    \caption{\label{fig:grating_angles} Grating geometric construction, the blue point is the input waveguide, the red point is the center of the output band, and the green point is the ellipse center. Also shown is the grating angle sign convention, an angle in the first quadrant is negative.}
     \end{figure}
-\section{Safety and Ethics}
+    
+    For the geometry configuration in Figure \ref{fig:grating_angles}, after solving the ellipse offset, d, in Equation \ref{eq:d}, the grating ellipsis are generated with the following code 
+\lstset{caption={Ellipse Class}}
+\begin{lstlisting}
+class GratingEllipse(ParametricGeometry):
+    max_radius = 0
 
-In the ACM Code of Conduct section 3.1 we see the main point of designing a new or enhanced device is should be to improve the lives of people \cite{ACMConduct}. This is our main goal which is reached by decreasing the cost of a spectrometer and therefore increasing the ability for people to obtain one. This would have a positive impact on scientific education from grade school to university.
+    def __init__(self, focus_0, focus_1, offset=0, origin=None):
+        super().__init__(origin)
+        A, B = (focus_0.u, focus_0.v), (focus_1.u, focus_1.v)
+        # x axis angle, needed for ellipse orientation
+        theta = atan2(B[1]-A[1], B[0]-A[0])  
+        center = focus_0.midpoint(focus_1)
+        self.u, self.v = center[0], center[1]
+        
+        
+        foci_spacing = sqrt((B[1]-A[1])**2 + (B[0]-A[0])**2)
+        major_axis = foci_spacing+2*offset
+        minor_axis = sqrt(major_axis**2-foci_spacing**2)
+        from shapely import affinity
+        
+        # create a circle of radius 1
+        curve = Point(self.u, self.v).buffer(1)
+        # create the ellipse by scaling the circle along x and y:
+        curve = affinity.scale(curve, major_axis, minor_axis)
+        
+        # Rotate the ellipse (clockwise, x axis pointing right):
+        self.curve = affinity.rotate(curve, theta, use_radians=True).boundary
+\end{lstlisting}
+    The final remaining unknown variable is the Rowland radius. The actual value of the radius does not impact device performance so long as the radius is greater than a few microns and the input beam divergence is relatively small \cite{Packirisamy2012Mono-OrderGrating}. For example, the spectra in Figure \ref{fig:ref_spec} are produced by a device with $R_{RC} = 50 \ \mu m$. Given this freedom, and that the linear dispersion scales directly with the radius of a concave grating, $R_{RC}$ should be scaled to fit the free spectral range of the device. However, there is no empirical equation for the FSR because the Bragg reflector limits the pass band. Figure \ref{fig:ref_spec} illustrates this by simulating an identical structure with varying reflector dimensions.
+    
+    Figure \ref{fig:alg} illustrates how FDTD may be leveraged to generate the optimal geometry for our device. However, because the Heidelberg maskless aligner in MRL has a minimum feature size of 600 nm, multiple exposures are required to meet the $\frac{d_2}{d} \approx 0$ approximation. This requirement means that the GDSII files for simulation and fabrication must be different; ultimately, I chose to simply define the elliptical curves so I could use them as a scaffold for both patterns.
 
-We recognize that our device will handle data belonging to its users. Data from our device could potentially be used in scientific research and other sensitive applications. The user's data must remain private to the intended users \cite{ACMConduct}. Our device will host a private network access point. Unauthorized users could potentially log in and access someone's data or cause data loss. We will mitigate these issues by presenting the users with a standard network login using password protection.
+    \begin{figure}[H]        
+    \centering
+    \scriptsize 
+    \includegraphics[width=0.7\textwidth]{images/ref_simulation.png}
+    \caption{\label{fig:ref_spec} Grating spectrum for varying values of $\frac{d_2}{d}$. The bandwidth of the system is bound by the bragg reflector, not the grating itself. Reproduced from from P. Pottier et al. \cite{Packirisamy2012Mono-OrderGrating}.}
+    \end{figure}
 
-While developing we must respect the works of others, which includes citing our sources and not claiming the works of others as our own seen in Section 1.5 of the ACM Code of Ethics \cite{ACMConduct}. Section 2.4 of the ACM Code discusses giving/receiving feedback. We must listen to the feedback from our instructors and TA's and consider it in our design.                        
-                        
-                        
+    \begin{figure}[H]        
+    \centering
+    \scriptsize 
+    \includegraphics[width=0.8\textwidth]{images/grating_algorithm.png}
+    \caption{\label{fig:alg} Grating construction algorithm, .}
+    \end{figure}
+    
+    \subsection{Remaining Work}
+    Unfortunately, the only FDTD experience I have is from this class, so I wasn't able to get the simulations running in this short amount of time. As previously discussed, because the masks for fabrication and simulation must be different I was reluctant to make my script geared towards a single application. To compromise, the ellipsis are defined by a center line, which shapely easily can buffer a polygon around. 
+    
+    Ultimately, I still plan to use my experience with microelectronics to fabricate a low-cost spectrometer for my applications. In particular, I am starting my PhD at UIUC next semester, and I would like to add several spectrometers to my reaction chamber. I have spent the last two years developing a python to python/c++ compiler for creating closed loop processing of semiconductors; however, I do not have a characterization device built on the same framework. If you are interested in the future development of my software my GitHub is \url{https://github.com/LukasJanavicius}, though note that the compiler has not been published for release at this time. 
+
+
+    \subsection{Discussion}
+    I have elected to omit code (with the exception of the ellipsis) from this report for the sake of brevity, but I will provide it alongside my submission. Feel free to use any of the material from this report or the script for future use. Given that gdshelpers has built in tools for generating MZI structures with grating couplers \cite{WelcomeDocumentation}, perhaps someone could implement their silicon photonics lab using this script and actually test the device. 
+    
+    I did not have time to completely generate the necessary files for the device; however, I wrote an auxiliary plotting script which accepts a parameter name and a range of values. Note that only one parameter is varied at a time, and the others are held constant at their value in Table \ref{tab:std_param}.
+    
+    \begin{table}[H]
+    \centering
+    \caption{Standard grating configuration parameter, unless otherwise specified these parameters are held constant throughout the construction. Also, note that the unit of the Rowland circle and grating thickness is arbitrary, and may be assigned when writing to a GDSII helper.}
+    \label{tab:std_param}
+    \begin{tabular}{|l|l|l|l|l|l|l|l|}
+    \hline
+    $n$ & $n_2$ & $\lambda_{grating}$ & M  & $\alpha$      & $\beta$       & $R_{RC}$ & $t_{grating}$ \\ \hline
+    1.5 & 1     & 600 nm              & -2 & -15$^{\circ}$ & -45$^{\circ}$ & 10       & 3             \\ \hline
+    \end{tabular}
+    \end{table}
+    
+    
+\section{Results}
+
+
+    \begin{figure}[H]        
+    \centering
+    \scriptsize 
+    \includegraphics[width=0.9 \textwidth]{images/varied_alpha_0.png}
+    \caption{\label{fig:vary_alpha} Grating geometries with varying input angle. Note the eccentricity of the ellipsis at large angle differences, and the circularity when approaching the Littrow condition $\alpha = \beta$.}
+    \end{figure}
+    
+    \begin{figure}[H]        
+    \centering
+    \scriptsize 
+    \includegraphics[width=0.9 \textwidth]{images/varied_M_0.png}
+    \caption{\label{fig:vary_M} Grating geometries with varying mode number $M$. As M decreases so does the grating spacing.}
+    \end{figure}
+    
+    \begin{figure}[H]        
+    \centering
+    \scriptsize 
+    \includegraphics[width=0.9 \textwidth]{images/vary_r.png}
+    \caption{\label{fig:vary_R} Grating geometries with varying Rowland radius. Grating spacing is independent of $R_{RC}$.}
+    \end{figure}
+    
+     \begin{table}[H]
+    \centering
+    \caption{Grating spacing as a function of the input angle.}
+    \label{tab:d_vs_alpha}
+    \begin{tabular}{|l|l|}
+    \hline
+    $\alpha$ & d (nm)  \\ \hline
+    -5.0     & 389.568 \\ \hline
+    -12.0    & 386.191 \\ \hline
+    -19.0    & 382.462 \\ \hline
+    -26.0    & 378.487 \\ \hline
+    -33.0    & 374.392 \\ \hline
+    -40.0    & 370.314 \\ \hline
+    \end{tabular}
+    \end{table}
+    
+    \begin{table}[H]
+    \centering
+    \caption{Grating spacing as a function of M.}
+    \label{tab:vary_m}
+    \begin{tabular}{|l|l|}
+    \hline
+    M  & d (nm)  \\ \hline
+    -4 & 769.26  \\ \hline
+    -3 & 576.945 \\ \hline
+    -2 & 384.63  \\ \hline
+    -1 & 192.315 \\ \hline
+    \end{tabular}
+    \end{table}
+    
+    \subsection{Discusssion}
+    Although my script can vary the grating geometry for any parameter in Table \ref{tab:std_param}, Figures \ref{fig:vary_alpha} through \ref{fig:vary_R} are meant to illustrate the geometry's dependence on parameters which may be freely chosen. The indices of refraction and target wavelength are bound by the material system and application, so are held constant for my purposes. 
+    
+    Tables \ref{tab:d_vs_alpha} and \ref{tab:vary_m} show how the design may be tweaked to fit lithographic constraints either by angle or mode number. It is worth noting that, as with a traditional spectrometer, with increasing $\abs{M}$ the device's resolving power increases, but the free spectral range decreases. For my applications I would like the greatest FSR possible, but as Figure \ref{fig:vary_M} illustrates, low mode numbers require extremely tight patterns. Using the school's photolithography tools I would expect to achieve a minimum $\abs{M} = 4$, and with a dedicated mask it should be possible to achieve $\abs{M} = 2$. Without simulations or empirical equations for the device's resolving power or FSR I cannot comment on their expected values. However, given the side wall roughness produced when fabricating photonics I fully confident my device's efficiency will by much lower than that reported by P. Pottier et al. \cite{Packirisamy2012Mono-OrderGrating}.
+    
 \clearpage
 \newpage
 \bibliographystyle{IEEEtran}
 \bibliography{bibliography/references}
+
+\addcontentsline{toc}{section}{References}
 \end{document}

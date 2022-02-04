@@ -3,10 +3,10 @@
 \usepackage[english]{babel}
 \usepackage[utf8x]{inputenc}
 \usepackage{times}
-%\usepackage{wasysym}
+
 \usepackage{float}
 \usepackage{subcaption}
-\usepackage[rgb]{xcolor} % Needed by pdfcomment
+% \usepackage[rgb]{xcolor} % Needed by pdfcomment
 
 \usepackage{import}
 %% Sets page size and margins
@@ -24,7 +24,7 @@
 \floatstyle{plaintop}
 \restylefloat{table}
 \linespread{1.6}
-\usepackage{epstopdf}
+% \usepackage{epstopdf}
 \epstopdfDeclareGraphicsRule{.tif}{png}{.png}{convert #1 \OutputFile}
 \AppendGraphicsExtensions{.tif}
 \setlength{\voffset}{0cm}
@@ -34,9 +34,9 @@
 \usepackage{siunitx}
 \usepackage{array}% in the preamble
 \usetikzlibrary{arrows,automata,positioning}
-\newcolumntype{L}{>{\arraybackslash}m{7.5cm}}
+\newcolumntype{L}{>{\arraybackslash}m{7.25cm}}
 \newcolumntype{C}{>{\centering\arraybackslash}m{3cm}}
-
+\usepackage{enumitem}
 \usepackage{listings}
 \usepackage{xcolor}
  
@@ -66,25 +66,7 @@
 \lstset{escapechar=@,style=customc}
 
 \graphicspath{{images/}}
-
+\usepackage{amsmath,amssymb}
 
 \input{setup/projectinfo}
-
-
-
-\newcommand{\scriptr}{\mathcalligra{r}\,}
-\newcommand{\boldscriptr}{\pmb{\mathcalligra{r}}\,}
-\def\rc{\scriptr}
-\def\brc{\boldscriptr}
-\def\hrc{\hat\brc}
-\newcommand{\ie}{\emph{i.e.}} %id est
-\newcommand{\eg}{\emph{e.g.}} %exempli gratia
-\newcommand{\rtd}[1]{\ensuremath{\left\lfloor #1 \right\rfloor}}
-\newcommand{\dirac}[1]{\ensuremath{\delta \left( #1 \right)}}
-\newcommand{\diract}[1]{\ensuremath{\delta^3 \left( #1 \right)}}
-\newcommand{\e}{\ensuremath{\epsilon_0}}
-\newcommand{\m}{\ensuremath{\mu_0}}
-\newcommand{\V}{\ensuremath{\mathcal{V}}}
-\newcommand{\prnt}[1]{\ensuremath{\left(#1\right)}} %parentheses
-\newcommand{\colch}[1]{\ensuremath{\left[#1\right]}} %square brackets
-\newcommand{\chave}[1]{\ensuremath{\left\{#1\right\}}}  %curly brackets
+\input{setup/Requirements}
