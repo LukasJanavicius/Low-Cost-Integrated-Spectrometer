@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Student: Lukas Janavicius NetId: janavic2 Professor: Peter Dragic" />
+  <title>Final Report – Planar Concave Grating Design</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+    }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
+  </style>
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Final Report – Planar Concave Grating Design</h1>
+<p class="author">Student: Lukas Janavicius<br />
+NetId: janavic2<br />
+Professor: Peter Dragic</p>
+<p class="date"> Spring 2020 </p>
+</header>
+<div class="titlepage">
+<div class="center">
+<p><strong><span><br />
+<br />
+</span></strong></p>
+<hr />
+<p><span><em><br />
+</em> ECE 495<br />
+Spring 2020</span></p>
+</div>
+</div>
+<h1 id="abstract">Abstract</h1>
+<p>In this work I present a novel method for programmaticly generating
+planar concave gratings based on concentric ellipsis. Although I was
+unsuccessful in simulating the device with FDTD, the implemented
+algorithm dynamically generates and visualizes any valid grating
+configuration. Additionally, I propose a pure python algorithm for
+closed-loop generation of these gratings for a wide breadth of
+applications. This algorithm is fully compatible with the required file
+format for the silicon photonics lab, so future students can use this
+work as a scaffold for their own exploration of planar gratings.</p>
+<p><span style="background-color: white"><img
+src="/images/grating_diagram_dd.png" alt="image" /></span></p>
+<h1 id="introduction-and-background">Introduction and Background</h1>
+<h2 id="basis-for-design">Basis for Design</h2>
+<p>The foundational work for this design comes from P. Pottier et al.
+<span class="citation"
+data-cites="Packirisamy2012Mono-OrderGrating">(Packirisamy and Pottier
+2012)</span>. The reference design, is displayed in Figure <a
+href="#fig:pot_ref" data-reference-type="ref"
+data-reference="fig:pot_ref">1</a>, the left image is a traditional
+planar Rowland grating, whereas the right is a mono-order distributed
+Bragg reflector grating. The design presented in this report follows the
+latter, as it offers greater efficiency than the traditional grating,
+and its construction lends itself to programmatic generation.</p>
+<figure>
+<img src="/images/pottier.png" id="fig:pot_ref"
+alt="Reference grating geometries, reproduced from from P. Pottier et al. (Packirisamy and Pottier 2012)." />
+<figcaption aria-hidden="true">Reference grating geometries, reproduced
+from from P. Pottier et al. <span class="citation"
+data-cites="Packirisamy2012Mono-OrderGrating">(Packirisamy and Pottier
+2012)</span>.</figcaption>
+</figure>
+<figure>
+<img src="/images/bragg_cond.png" id="fig:nanos_test_code0"
+style="width:65.0%"
+alt=" Bragg condition for two material stack (Packirisamy and Pottier 2012)." />
+<figcaption aria-hidden="true"> Bragg condition for two material stack
+<span class="citation"
+data-cites="Packirisamy2012Mono-OrderGrating">(Packirisamy and Pottier
+2012)</span>.</figcaption>
+</figure>
+<h2 id="verification-of-elliptical-design">Verification of Elliptical
+Design</h2>
+<p>The following equations describe the various geometrical and optical
+condition for optimal device performance <span class="citation"
+data-cites="Packirisamy2012Mono-OrderGrating Pottier2014IntegratedInsulator">(Packirisamy
+and Pottier 2012; Pottier, Strain, and Packirisamy 2014)</span>. As
+discussed in the work of P. Pottier et al. <span class="citation"
+data-cites="Packirisamy2012Mono-OrderGrating">(Packirisamy and Pottier
+2012)</span>, drawing ellipsis who’s foci are the input and output
+points with thickness <span class="math inline">\(d_2\)</span> offset
+from one another by a distance <span class="math inline">\(d\)</span>
+(the center to center distance), satisfies the diffraction conditions
+and the blazing condition. However, as discussed below, the bragg
+reflector stack cannot be fabricated in an ideal manner. Despite this,
+if the ellipse thickness is much smaller than the spacing between the
+ellipsis, that is <span class="math inline">\(\frac{d_2}{d} \approx
+0\)</span>, the device’s efficiency is maximized.</p>
+<h3 id="equations">Equations</h3>
+<p>To improve the device’s efficiency, the grating may be curved. The
+radius of the grating must be <span class="math inline">\(2
+R_{RC}\)</span>, so that it focuses the input light into the outputs
+placed around the Rowland Circle. It’s worth noting that the radius does
+not particularly matter, for the purposes of this design <span
+class="math display">\[\vb{M \lambda} = - n a (\sin{\alpha} +
+\sin{\beta})
+    \label{eq:a}\]</span> We also note, <span
+class="math display">\[\sin{\theta} = \frac{d}{a}\]</span></p>
+<p>The second diffraction condition comes from finding the path length
+difference <span class="math inline">\(\delta\)</span>, <span
+class="math display">\[m \lambda = 2 \Bigg[ n d_1 \cos{\phi} + n_2 d_2
+\sqrt{1-(\frac{n}{n_2})^2 \sin^2 \phi} \Bigg]\]</span></p>
+<p>To select our pass-band center, the angle of the grating lines with
+respect to the grating normal, <span
+class="math inline">\(\phi\)</span>, should obey Snell’s law. That
+is,</p>
+<p><span class="math display">\[\left \lbrace
+    \begin{aligned}
+        &amp;\alpha - \phi + \theta = 0\\
+        &amp;\alpha - \beta = 2 \phi\\
+    \end{aligned}
+    \right.\]</span></p>
+<p>Rearranging the above conditions yield the following critical
+relation, so if <span class="math inline">\(a\)</span> is found using
+equation <a href="#eq:a" data-reference-type="ref"
+data-reference="eq:a">[eq:a]</a>, the center-to-center distance <span
+class="math inline">\(d\)</span> is <span class="math display">\[d = -a
+\sin (\frac{\alpha + \beta}{2})
+    \label{eq:d}\]</span></p>
+<p>The optimal Bragg reflector dimensions are <span
+class="math display">\[\left \lbrace
+    \begin{aligned}
+        &amp;d_1 = \frac{(2 k_1 +1) \lambda}{4 n \cos{\phi}}\\
+        &amp;d_2 = \frac{(2 k_2 +1) \lambda}{4 n_2 \cos{\phi_2}}\\
+        &amp;k_1, k_2 \in \mathbb{Z}
+    \end{aligned}
+    \right.\]</span> It is very difficult to select dimensions such that
+the above conditions are met; however, if <span
+class="math inline">\(\frac{d_2}{d} \approx 0\)</span> or <span
+class="math inline">\(d_1 = d_2\)</span> and <span
+class="math inline">\(n_2 \approx  n\)</span> then the path length
+difference from both conditions is approximately equal <span
+class="citation"
+data-cites="Packirisamy2012Mono-OrderGrating Pottier2014IntegratedInsulator">(Packirisamy
+and Pottier 2012; Pottier, Strain, and Packirisamy 2014)</span>.
+Therefore <span class="math inline">\(m=-M\)</span>, which optimizes
+device efficiency.</p>
+<h1 id="implementation">Implementation</h1>
+<p>The entirety of the design work takes place in the python programming
+language; specifically, using the geometric package Shapely. Shapely is
+a BSD-licensed Python package for manipulation and analysis of planar
+geometric objects <span class="citation"
+data-cites="ShapelyDocumentation">(<span>“<span class="nocase">Shapely —
+Shapely 1.8dev documentation</span>,”</span> n.d.)</span>. The key
+advantage of using shapely to define photonic circuit elements is the
+native support for gdshelpers, another package which takes shapely
+polygons and curves and generates photonic devices <span
+class="citation" data-cites="WelcomeDocumentation">(<span>“<span
+class="nocase">Welcome to the gdshelpers’ documentation! — gdshelpers
+1.1.1 documentation</span>,”</span> n.d.)</span>. From MZIs, waveguides,
+couplers, and resonators the gdshelper package offers many tools for
+creating GDSII files, which are standard for lithography tools.
+Furthermore, the open source FDTD package, Meep, offers a GDSII importer
+for simulations <span class="citation"
+data-cites="ManualDocumentation">(<span>“<span>Manual - MEEP
+Documentation</span>,”</span> n.d.)</span>. Although I did not generate
+mask files or simulate the structure, which is discussed further below,
+it is possible to implement the closed-loop algorithm in Figure <a
+href="#fig:alg" data-reference-type="ref" data-reference="fig:alg">5</a>
+entirely in one script.</p>
+<h2 id="algorithm">Algorithm</h2>
+<figure>
+<img src="/images/grating_construction.png" id="fig:grating_angles"
+style="width:50.0%"
+alt="Grating geometric construction, the blue point is the input waveguide, the red point is the center of the output band, and the green point is the ellipse center. Also shown is the grating angle sign convention, an angle in the first quadrant is negative." />
+<figcaption aria-hidden="true">Grating geometric construction, the blue
+point is the input waveguide, the red point is the center of the output
+band, and the green point is the ellipse center. Also shown is the
+grating angle sign convention, an angle in the first quadrant is
+negative.</figcaption>
+</figure>
+<p>For the geometry configuration in Figure <a
+href="#fig:grating_angles" data-reference-type="ref"
+data-reference="fig:grating_angles">3</a>, after solving the ellipse
+offset, d, in Equation <a href="#eq:d" data-reference-type="ref"
+data-reference="eq:d">[eq:d]</a>, the grating ellipsis are generated
+with the following code</p>
+<pre><code>class GratingEllipse(ParametricGeometry):
+    max_radius = 0
+
+    def __init__(self, focus_0, focus_1, offset=0, origin=None):
+        super().__init__(origin)
+        A, B = (focus_0.u, focus_0.v), (focus_1.u, focus_1.v)
+        # x axis angle, needed for ellipse orientation
+        theta = atan2(B[1]-A[1], B[0]-A[0])  
+        center = focus_0.midpoint(focus_1)
+        self.u, self.v = center[0], center[1]
+        
+        
+        foci_spacing = sqrt((B[1]-A[1])**2 + (B[0]-A[0])**2)
+        major_axis = foci_spacing+2*offset
+        minor_axis = sqrt(major_axis**2-foci_spacing**2)
+        from shapely import affinity
+        
+        # create a circle of radius 1
+        curve = Point(self.u, self.v).buffer(1)
+        # create the ellipse by scaling the circle along x and y:
+        curve = affinity.scale(curve, major_axis, minor_axis)
+        
+        # Rotate the ellipse (clockwise, x axis pointing right):
+        self.curve = affinity.rotate(curve, theta, use_radians=True).boundary</code></pre>
+<p>The final remaining unknown variable is the Rowland radius. The
+actual value of the radius does not impact device performance so long as
+the radius is greater than a few microns and the input beam divergence
+is relatively small <span class="citation"
+data-cites="Packirisamy2012Mono-OrderGrating">(Packirisamy and Pottier
+2012)</span>. For example, the spectra in Figure <a href="#fig:ref_spec"
+data-reference-type="ref" data-reference="fig:ref_spec">4</a> are
+produced by a device with <span class="math inline">\(R_{RC} = 50 \ \mu
+m\)</span>. Given this freedom, and that the linear dispersion scales
+directly with the radius of a concave grating, <span
+class="math inline">\(R_{RC}\)</span> should be scaled to fit the free
+spectral range of the device. However, there is no empirical equation
+for the FSR because the Bragg reflector limits the pass band. Figure <a
+href="#fig:ref_spec" data-reference-type="ref"
+data-reference="fig:ref_spec">4</a> illustrates this by simulating an
+identical structure with varying reflector dimensions.</p>
+<p>Figure <a href="#fig:alg" data-reference-type="ref"
+data-reference="fig:alg">5</a> illustrates how FDTD may be leveraged to
+generate the optimal geometry for our device. However, because the
+Heidelberg maskless aligner in MRL has a minimum feature size of 600 nm,
+multiple exposures are required to meet the <span
+class="math inline">\(\frac{d_2}{d} \approx 0\)</span> approximation.
+This requirement means that the GDSII files for simulation and
+fabrication must be different; ultimately, I chose to simply define the
+elliptical curves so I could use them as a scaffold for both
+patterns.</p>
+<figure>
+<img src="/images/ref_simulation.png" id="fig:ref_spec"
+style="width:70.0%"
+alt="Grating spectrum for varying values of \frac{d_2}{d}. The bandwidth of the system is bound by the bragg reflector, not the grating itself. Reproduced from from P. Pottier et al. (Packirisamy and Pottier 2012)." />
+<figcaption aria-hidden="true">Grating spectrum for varying values of
+<span class="math inline">\(\frac{d_2}{d}\)</span>. The bandwidth of the
+system is bound by the bragg reflector, not the grating itself.
+Reproduced from from P. Pottier et al. <span class="citation"
+data-cites="Packirisamy2012Mono-OrderGrating">(Packirisamy and Pottier
+2012)</span>.</figcaption>
+</figure>
+<figure>
+<img src="/images/grating_algorithm.png" id="fig:alg"
+style="width:80.0%" alt="Grating construction algorithm, ." />
+<figcaption aria-hidden="true">Grating construction algorithm,
+.</figcaption>
+</figure>
+<h2 id="remaining-work">Remaining Work</h2>
+<p>Unfortunately, the only FDTD experience I have is from this class, so
+I wasn’t able to get the simulations running in this short amount of
+time. As previously discussed, because the masks for fabrication and
+simulation must be different I was reluctant to make my script geared
+towards a single application. To compromise, the ellipsis are defined by
+a center line, which shapely easily can buffer a polygon around.</p>
+<p>Ultimately, I still plan to use my experience with microelectronics
+to fabricate a low-cost spectrometer for my applications. In particular,
+I am starting my PhD at UIUC next semester, and I would like to add
+several spectrometers to my reaction chamber. I have spent the last two
+years developing a python to python/c++ compiler for creating closed
+loop processing of semiconductors; however, I do not have a
+characterization device built on the same framework. If you are
+interested in the future development of my software my GitHub is <a
+href="https://github.com/LukasJanavicius"
+class="uri">https://github.com/LukasJanavicius</a>, though note that the
+compiler has not been published for release at this time.</p>
+<h2 id="discussion">Discussion</h2>
+<p>I have elected to omit code (with the exception of the ellipsis) from
+this report for the sake of brevity, but I will provide it alongside my
+submission. Feel free to use any of the material from this report or the
+script for future use. Given that gdshelpers has built in tools for
+generating MZI structures with grating couplers <span class="citation"
+data-cites="WelcomeDocumentation">(<span>“<span class="nocase">Welcome
+to the gdshelpers’ documentation! — gdshelpers 1.1.1
+documentation</span>,”</span> n.d.)</span>, perhaps someone could
+implement their silicon photonics lab using this script and actually
+test the device.</p>
+<p>I did not have time to completely generate the necessary files for
+the device; however, I wrote an auxiliary plotting script which accepts
+a parameter name and a range of values. Note that only one parameter is
+varied at a time, and the others are held constant at their value in
+Table <a href="#tab:std_param" data-reference-type="ref"
+data-reference="tab:std_param">1</a>.</p>
+<div id="tab:std_param">
+<table>
+<caption>Standard grating configuration parameter, unless otherwise
+specified these parameters are held constant throughout the
+construction. Also, note that the unit of the Rowland circle and grating
+thickness is arbitrary, and may be assigned when writing to a GDSII
+helper.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><span
+class="math inline">\(n\)</span></th>
+<th style="text-align: left;"><span
+class="math inline">\(n_2\)</span></th>
+<th style="text-align: left;"><span
+class="math inline">\(\lambda_{grating}\)</span></th>
+<th style="text-align: left;">M</th>
+<th style="text-align: left;"><span
+class="math inline">\(\alpha\)</span></th>
+<th style="text-align: left;"><span
+class="math inline">\(\beta\)</span></th>
+<th style="text-align: left;"><span
+class="math inline">\(R_{RC}\)</span></th>
+<th style="text-align: left;"><span
+class="math inline">\(t_{grating}\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1.5</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">600 nm</td>
+<td style="text-align: left;">-2</td>
+<td style="text-align: left;">-15<span
+class="math inline">\(^{\circ}\)</span></td>
+<td style="text-align: left;">-45<span
+class="math inline">\(^{\circ}\)</span></td>
+<td style="text-align: left;">10</td>
+<td style="text-align: left;">3</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="results">Results</h1>
+<figure>
+<img src="/images/varied_alpha_0.png" id="fig:vary_alpha"
+alt="Grating geometries with varying input angle. Note the eccentricity of the ellipsis at large angle differences, and the circularity when approaching the Littrow condition \alpha = \beta." />
+<figcaption aria-hidden="true">Grating geometries with varying input
+angle. Note the eccentricity of the ellipsis at large angle differences,
+and the circularity when approaching the Littrow condition <span
+class="math inline">\(\alpha = \beta\)</span>.</figcaption>
+</figure>
+<figure>
+<img src="/images/varied_M_0.png" id="fig:vary_M"
+alt="Grating geometries with varying mode number M. As M decreases so does the grating spacing." />
+<figcaption aria-hidden="true">Grating geometries with varying mode
+number <span class="math inline">\(M\)</span>. As M decreases so does
+the grating spacing.</figcaption>
+</figure>
+<figure>
+<img src="/images/vary_r.png" id="fig:vary_R"
+alt="Grating geometries with varying Rowland radius. Grating spacing is independent of R_{RC}." />
+<figcaption aria-hidden="true">Grating geometries with varying Rowland
+radius. Grating spacing is independent of <span
+class="math inline">\(R_{RC}\)</span>.</figcaption>
+</figure>
+<div id="tab:d_vs_alpha">
+<table>
+<caption>Grating spacing as a function of the input angle.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"><span
+class="math inline">\(\alpha\)</span></th>
+<th style="text-align: left;">d (nm)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">-5.0</td>
+<td style="text-align: left;">389.568</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">-12.0</td>
+<td style="text-align: left;">386.191</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">-19.0</td>
+<td style="text-align: left;">382.462</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">-26.0</td>
+<td style="text-align: left;">378.487</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">-33.0</td>
+<td style="text-align: left;">374.392</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">-40.0</td>
+<td style="text-align: left;">370.314</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="tab:vary_m">
+<table>
+<caption>Grating spacing as a function of M.</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">M</th>
+<th style="text-align: left;">d (nm)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">-4</td>
+<td style="text-align: left;">769.26</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">-3</td>
+<td style="text-align: left;">576.945</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">-2</td>
+<td style="text-align: left;">384.63</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">-1</td>
+<td style="text-align: left;">192.315</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="discusssion">Discusssion</h2>
+<p>Although my script can vary the grating geometry for any parameter in
+Table <a href="#tab:std_param" data-reference-type="ref"
+data-reference="tab:std_param">1</a>, Figures <a href="#fig:vary_alpha"
+data-reference-type="ref" data-reference="fig:vary_alpha">6</a> through
+<a href="#fig:vary_R" data-reference-type="ref"
+data-reference="fig:vary_R">8</a> are meant to illustrate the geometry’s
+dependence on parameters which may be freely chosen. The indices of
+refraction and target wavelength are bound by the material system and
+application, so are held constant for my purposes.</p>
+<p>Tables <a href="#tab:d_vs_alpha" data-reference-type="ref"
+data-reference="tab:d_vs_alpha">2</a> and <a href="#tab:vary_m"
+data-reference-type="ref" data-reference="tab:vary_m">3</a> show how the
+design may be tweaked to fit lithographic constraints either by angle or
+mode number. It is worth noting that, as with a traditional
+spectrometer, with increasing <span
+class="math inline">\(\abs{M}\)</span> the device’s resolving power
+increases, but the free spectral range decreases. For my applications I
+would like the greatest FSR possible, but as Figure <a
+href="#fig:vary_M" data-reference-type="ref"
+data-reference="fig:vary_M">7</a> illustrates, low mode numbers require
+extremely tight patterns. Using the school’s photolithography tools I
+would expect to achieve a minimum <span class="math inline">\(\abs{M} =
+4\)</span>, and with a dedicated mask it should be possible to achieve
+<span class="math inline">\(\abs{M} = 2\)</span>. Without simulations or
+empirical equations for the device’s resolving power or FSR I cannot
+comment on their expected values. However, given the side wall roughness
+produced when fabricating photonics I fully confident my device’s
+efficiency will by much lower than that reported by P. Pottier et al.
+<span class="citation"
+data-cites="Packirisamy2012Mono-OrderGrating">(Packirisamy and Pottier
+2012)</span>.</p>
+<div id="refs" class="references csl-bib-body hanging-indent"
+role="doc-bibliography">
+<div id="ref-ManualDocumentation" class="csl-entry"
+role="doc-biblioentry">
+<span>“<span>Manual - MEEP Documentation</span>.”</span> n.d. <a
+href="https://meep.readthedocs.io/en/latest/">https://meep.readthedocs.io/en/latest/</a>.
+</div>
+<div id="ref-Packirisamy2012Mono-OrderGrating" class="csl-entry"
+role="doc-biblioentry">
+Packirisamy, Muthukumaran, and Pierre Pottier. 2012.
+<span>“<span>Mono-Order High-Efficiency Dielectric Concave Diffraction
+Grating</span>.”</span> <em>Journal of Lightwave Technology, Vol. 30,
+Issue 17, Pp. 2922-2928</em> 30 (17): 2922–28.
+</div>
+<div id="ref-Pottier2014IntegratedInsulator" class="csl-entry"
+role="doc-biblioentry">
+Pottier, Pierre, Michael J. Strain, and Muthukumaran Packirisamy. 2014.
+<span>“<span class="nocase">Integrated Microspectrometer with Elliptical
+Bragg Mirror Enhanced Diffraction Grating on Silicon on
+Insulator</span>.”</span> <em>ACS Photonics</em> 1 (5): 430–36. <a
+href="https://doi.org/10.1021/ph400165j">https://doi.org/10.1021/ph400165j</a>.
+</div>
+<div id="ref-ShapelyDocumentation" class="csl-entry"
+role="doc-biblioentry">
+<span>“<span class="nocase">Shapely — Shapely 1.8dev
+documentation</span>.”</span> n.d. <a
+href="https://shapely.readthedocs.io/en/latest/">https://shapely.readthedocs.io/en/latest/</a>.
+</div>
+<div id="ref-WelcomeDocumentation" class="csl-entry"
+role="doc-biblioentry">
+<span>“<span class="nocase">Welcome to the gdshelpers’ documentation! —
+gdshelpers 1.1.1 documentation</span>.”</span> n.d. <a
+href="https://gdshelpers.readthedocs.io/en/latest/index.html">https://gdshelpers.readthedocs.io/en/latest/index.html</a>.
+</div>
+</div>
+</body>
+</html>
