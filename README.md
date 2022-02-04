@@ -1,3 +1,16 @@
+# Readme.
+I'm sorry for the state of this repo. However, due to covid, both semesters I tried to fully develop this project I was unable.
+
+The following is a conversion of the second attempt at implementing a elliptical concave grating. The provided documents detail a physical device, gds files, and gds compatible geometry tools for generating planar concave gratings.
+
+Those more experienced in planar photonics fabrication may find this interesting. Any questions or comments on the project may be directed to janavic2@illinois.edu
+
+
+Feel free to use the code or ideas in your own work with appropriate citation to this repository.
+
+
+The following is a poor pandoc translation of some of the original project.
+
 ---
 author: "Student: Lukas Janavicius NetId: janavic2 Professor: Peter
   Dragic"
