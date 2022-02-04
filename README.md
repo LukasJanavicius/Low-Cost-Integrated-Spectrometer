@@ -4,9 +4,7 @@ author:
   Student: Lukas Janavicius\
   NetId: janavic2\
   Professor: Peter Dragic
-bibliography: "C:\\\\Users\\\\lukej\\\\Desktop\\\\Spectrometer DDC - janavic2,
-  sgioja2,
-  andrewi2\\\\Low-Cost-Integrated-Spectrometer\\\\bibliography\\\\references.bib"
+bibliography: bibliography\\references.bib
 date:  Spring 2020
 title: Final Report -- Planar Concave Grating Design
 ---

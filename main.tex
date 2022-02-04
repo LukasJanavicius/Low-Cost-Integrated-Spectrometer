@@ -34,8 +34,8 @@ In this work I present a novel method for programmaticly generating planar conca
 \centering
 \large 
 \def\svgwidth{0.8 \textwidth}
-\colorbox{white}{\includegraphics{images/grating_diagram_dd.png}}
-%\includegraphics{images/proposal_layout.pdf_tex}
+\colorbox{white}{\includegraphics{/images/grating_diagram_dd.png}}
+%\includegraphics{/images/proposal_layout.pdf_tex}
 %\caption{\label{fig:spec_intro}Spectrometer grating layout.}
 \end{figure}
 
@@ -49,13 +49,13 @@ The foundational work for this design comes from P. Pottier et al. \cite{Packiri
 \begin{figure}[H]        
 \centering
 \scriptsize 
-\includegraphics[width=0.9 \textwidth]{images/pottier.png}
+\includegraphics[width=0.9 \textwidth]{/images/pottier.png}
 \caption{\label{fig:pot_ref} Reference grating geometries, reproduced from from P. Pottier et al. \cite{Packirisamy2012Mono-OrderGrating}.}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.65\textwidth]{images/bragg_cond.png}
+\includegraphics[width=0.65\textwidth]{/images/bragg_cond.png}
 \caption{ Bragg condition for two material stack \cite{Packirisamy2012Mono-OrderGrating}.}
 \label{fig:nanos_test_code0}
 \end{figure}
@@ -120,7 +120,7 @@ It is very difficult to select dimensions such that the above conditions are met
     \begin{figure}[H]        
     \centering
     \scriptsize 
-    \includegraphics[width=0.5\textwidth]{images/grating_construction.png}
+    \includegraphics[width=0.5\textwidth]{/images/grating_construction.png}
     \caption{\label{fig:grating_angles} Grating geometric construction, the blue point is the input waveguide, the red point is the center of the output band, and the green point is the ellipse center. Also shown is the grating angle sign convention, an angle in the first quadrant is negative.}
     \end{figure}
     
@@ -159,14 +159,14 @@ class GratingEllipse(ParametricGeometry):
     \begin{figure}[H]        
     \centering
     \scriptsize 
-    \includegraphics[width=0.7\textwidth]{images/ref_simulation.png}
+    \includegraphics[width=0.7\textwidth]{/images/ref_simulation.png}
     \caption{\label{fig:ref_spec} Grating spectrum for varying values of $\frac{d_2}{d}$. The bandwidth of the system is bound by the bragg reflector, not the grating itself. Reproduced from from P. Pottier et al. \cite{Packirisamy2012Mono-OrderGrating}.}
     \end{figure}
 
     \begin{figure}[H]        
     \centering
     \scriptsize 
-    \includegraphics[width=0.8\textwidth]{images/grating_algorithm.png}
+    \includegraphics[width=0.8\textwidth]{/images/grating_algorithm.png}
     \caption{\label{fig:alg} Grating construction algorithm, .}
     \end{figure}
     
@@ -199,21 +199,21 @@ class GratingEllipse(ParametricGeometry):
     \begin{figure}[H]        
     \centering
     \scriptsize 
-    \includegraphics[width=0.9 \textwidth]{images/varied_alpha_0.png}
+    \includegraphics[width=0.9 \textwidth]{/images/varied_alpha_0.png}
     \caption{\label{fig:vary_alpha} Grating geometries with varying input angle. Note the eccentricity of the ellipsis at large angle differences, and the circularity when approaching the Littrow condition $\alpha = \beta$.}
     \end{figure}
     
     \begin{figure}[H]        
     \centering
     \scriptsize 
-    \includegraphics[width=0.9 \textwidth]{images/varied_M_0.png}
+    \includegraphics[width=0.9 \textwidth]{/images/varied_M_0.png}
     \caption{\label{fig:vary_M} Grating geometries with varying mode number $M$. As M decreases so does the grating spacing.}
     \end{figure}
     
     \begin{figure}[H]        
     \centering
     \scriptsize 
-    \includegraphics[width=0.9 \textwidth]{images/vary_r.png}
+    \includegraphics[width=0.9 \textwidth]{/images/vary_r.png}
     \caption{\label{fig:vary_R} Grating geometries with varying Rowland radius. Grating spacing is independent of $R_{RC}$.}
     \end{figure}
     
